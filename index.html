@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/icon" href="./assets/favicon.ico" />
+    <title>Mabylife's Practices</title>
+
+    <style>
+      @import "./fonts/JetBrains-Mono.css";
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Major+Mono+Display&family=Noto+Sans+TC:wght@100..900&display=swap");
+      /* Global Variables */
+      :root {
+        --bg-dark: #030303;
+        --bg: #0a0a0a;
+        --bg-light: #171717;
+        --text: #f2f2f2;
+        --text-muted: #b0b0b0;
+        --highlight: #636363;
+        --border: #474747;
+        --border-muted: #2e2e2e;
+        --primary: #b9a5e9;
+        --secondary: #aab96e;
+        --danger: #bb928b;
+        --warning: #a6a17d;
+        --success: #85a894;
+        --info: #8da0bf;
+
+        font-size: 16px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      *::selection {
+        background-color: none; /* Change this to your desired background color */
+        color: var(--primary); /* Change this to your desired text color */
+      }
+
+      /* For Firefox compatibility */
+      *::-moz-selection {
+        background-color: none; /* Same as above */
+        color: var(--primary); /* Same as above */
+      }
+
+      #root {
+        font-size: 16px;
+      }
+
+      html {
+        background-color: var(--bg);
+      }
+
+      .h1,
+      h1 {
+        color: var(--text);
+
+        /* h1 */
+        font-family: "Major Mono Display";
+        font-size: 2rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 120%; /* 2.4rem */
+        letter-spacing: 0.24rem;
+      }
+
+      .h2,
+      h2 {
+        color: var(--text);
+
+        /* h2 */
+        font-family: "JetBrains Mono", "Noto Sans TC", monospace;
+        font-size: 1.375rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 130%; /* 1.7875rem */
+        letter-spacing: 0.1925rem;
+      }
+
+      .body,
+      p {
+        color: var(--text);
+
+        /* body */
+        font-family: "JetBrains Mono", "Noto Sans TC", monospace;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%; /* 1.5rem */
+        letter-spacing: 0.16rem;
+      }
+
+      .small,
+      .small {
+        color: var(--text);
+
+        /* small */
+        font-family: "JetBrains Mono", "Noto Sans TC", monospace;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 120%; /* 1.05rem */
+        letter-spacing: 0.14rem;
+      }
+
+      /* End Global Variables */
+
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+        padding: 20rem;
+      }
+
+      .linkBtn {
+        text-decoration: none;
+        background-color: var(--bg-light);
+        padding: 0.5em 1em;
+        border: 0.1em solid var(--border);
+      }
+
+      .linkBtn a {
+        color: var(--text);
+        text-decoration: none;
+      }
+
+      .linkBtn:hover a {
+        color: var(--primary);
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Mabylife's Practices</h1>
+    <div class="btnList">
+      <div class="linkBtn">
+        <a
+          class="btn body"
+          href="1-QR-code-component/index.html"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          1. QR Code Component
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
