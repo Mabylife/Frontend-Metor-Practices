@@ -78,4 +78,18 @@ button.submit {
   font-weight: 500;
   line-height: 120%; /* 1.5rem */
 }
+
+@media (max-width: 1440px) {
+  .searchBar-container {
+    width: 100%;
+  }
+  .input-container {
+    flex-grow: 1;
+    width: auto;
+  }
+
+  .input-container > input {
+    width: 100%;
+  }
+}
 </style>

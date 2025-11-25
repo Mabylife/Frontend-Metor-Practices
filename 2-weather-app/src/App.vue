@@ -24,6 +24,12 @@ import Homepage from './Homepage.vue'
 </style>
 
 <style scoped>
+:root,
+html,
+body {
+  background-color: var(--colors-neutral-900, #02012c);
+}
+
 body {
   width: 100vw;
   height: auto;

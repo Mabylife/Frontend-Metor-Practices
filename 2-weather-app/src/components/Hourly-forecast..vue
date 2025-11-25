@@ -52,4 +52,10 @@ h5 {
   font-weight: 600;
   line-height: 120%; /* 1.5rem */
 }
+
+@media (max-width: 1440px) {
+  .hourlyForecast-container {
+    width: 100%;
+  }
+}
 </style>

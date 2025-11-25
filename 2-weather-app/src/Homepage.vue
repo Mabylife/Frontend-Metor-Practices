@@ -69,4 +69,41 @@ import HourlyForecast from './components/Hourly-forecast..vue'
   align-items: flex-start;
   gap: var(--spacing-600, 3rem);
 }
+
+@media (max-width: 1440px) {
+  .container {
+    display: flex;
+    width: 100%;
+    padding: var(--spacing-300, 1.5rem) var(--spacing-300, 1.5rem) var(--spacing-1000, 5rem)
+      var(--spacing-300, 1.5rem);
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-600, 3rem);
+  }
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-400, 2rem);
+    align-self: stretch;
+  }
+
+  .main-bottom-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+    align-self: stretch;
+  }
+
+  .left-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-400, 2rem);
+    align-self: stretch;
+  }
+}
 </style>

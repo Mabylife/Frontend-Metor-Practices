@@ -88,10 +88,19 @@ h1 {
   height: 17.875rem;
   background-image: url(/assets/images/bg-today-large.svg);
 
+  background-size: cover;
+  object-fit: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 1.25rem;
+  border: none;
+
   display: flex;
   align-items: center;
   padding: 1.5rem;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .quickView-container > .left {
@@ -112,5 +121,20 @@ h1 {
 
   /* italic font fix */
   padding-right: 1rem;
+}
+
+@media (max-width: 1440px) {
+  .overviewDashboard-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-250, 1.25rem);
+    align-self: stretch;
+  }
+
+  .quickView-container {
+    width: 100%;
+  }
 }
 </style>
