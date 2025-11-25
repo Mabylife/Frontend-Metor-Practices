@@ -6,6 +6,12 @@ import SearchBar from './components/Search-bar.vue'
 import OverviewDashboard from './components/Overview-dashboard.vue'
 import DailyForecast from './components/Daily-forecast.vue'
 import HourlyForecast from './components/Hourly-forecast..vue'
+
+import { useWeatherStore } from './stores/data'
+
+const store = useWeatherStore()
+
+store.getCurrentData()
 </script>
 
 <template>

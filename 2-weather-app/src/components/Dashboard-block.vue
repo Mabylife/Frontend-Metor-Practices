@@ -1,25 +1,71 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { useWeatherStore } from '@/stores/data'
+
+const store = useWeatherStore()
 
 const props = defineProps({
   property: {
     type: String,
     required: true,
   },
+  isLoading: {
+    type: Boolean,
+    required: true,
+  },
+})
+
+onMounted(() => {
+  store.getCurrentData()
 })
 
 const title = ref('')
-const value = ref(0)
 
-const valueOutput = ref('')
+const value = computed(() => {
+  if (props.isLoading) {
+    return `-`
+  }
 
+  if (props.property === 'Feels Like') {
+    return store.apparent
+  }
+  if (props.property === 'Humidity') {
+    return store.humidity
+  }
+  if (props.property === 'Wind') {
+    return store.wind
+  }
+  if (props.property === 'Precipitation') {
+    return store.precipitation
+  }
+})
+
+const unit = computed(() => {
+  if (props.isLoading) {
+    return ``
+  }
+  if (props.property === 'Feels Like') {
+    return store.uDegree
+  }
+  if (props.property === 'Humidity') {
+    return '%'
+  }
+  if (props.property === 'Wind') {
+    return store.uSpeed
+  }
+  if (props.property === 'Precipitation') {
+    return store.uLength
+  }
+})
 title.value = props.property
+
+//define value
 </script>
 
 <template>
   <div class="DashBoardBlock-container">
     <h6>{{ property }}</h6>
-    <h3>0 unit</h3>
+    <h3>{{ value }} {{ unit }}</h3>
   </div>
 </template>
 

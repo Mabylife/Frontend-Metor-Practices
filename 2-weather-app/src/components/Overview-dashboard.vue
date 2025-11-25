@@ -1,24 +1,64 @@
 <script setup>
+import { onMounted, ref } from 'vue'
 import DashboardBlock from './Dashboard-block.vue'
+import { useWeatherStore } from '@/stores/data'
+
+const store = useWeatherStore()
+
+const loading = ref(true)
+
+onMounted(async () => {
+  await store.getCurrentData()
+  loading.value = false
+})
+
+const now = ref()
+now.value = new Date()
+const year = now.value.getFullYear()
+const month = now.value.getMonth() + 1 // Add 1 because getMonth() is 0-indexed
+const day = now.value.getDate()
+
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const weekDay = days[now.value.getDay()]
+
+const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+]
+const monthName = months[now.value.getMonth()]
 </script>
 
 <template>
   <div class="overviewDashboard-container">
     <div class="quickView-container">
       <div class="left">
-        <h4>City, Country</h4>
-        <h6>Monday, March 10, 2025</h6>
+        <h4 v-if="loading">Loading...</h4>
+        <h4 v-if="!loading">
+          {{ store.city }}<span v-if="store.country">, </span>{{ store.country }}
+        </h4>
+        <h6>{{ weekDay }}, {{ monthName }} {{ day }}, {{ year }}</h6>
       </div>
       <div class="right">
         <img src="/assets/images/icon-snow.webp" class="icon" alt="weather indicator" />
-        <h1>20°</h1>
+        <h1 v-if="loading">- °</h1>
+        <h1 v-if="!loading">{{ store.temperature }}°</h1>
       </div>
     </div>
     <div class="blocks-container">
-      <DashboardBlock :property="'Feels Like'" />
-      <DashboardBlock :property="'Humidity'" />
-      <DashboardBlock :property="'Wind'" />
-      <DashboardBlock :property="'Precipitation'" />
+      <DashboardBlock :isLoading="loading" :property="'Feels Like'" />
+      <DashboardBlock :isLoading="loading" :property="'Humidity'" />
+      <DashboardBlock :isLoading="loading" :property="'Wind'" />
+      <DashboardBlock :isLoading="loading" :property="'Precipitation'" />
     </div>
   </div>
 </template>
