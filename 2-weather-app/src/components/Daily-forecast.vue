@@ -43,4 +43,8 @@ h5 {
   font-weight: 600;
   line-height: 120%; /* 1.5rem */
 }
+
+.blocks-container {
+  flex-wrap: wrap;
+}
 </style>

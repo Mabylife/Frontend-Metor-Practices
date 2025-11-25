@@ -136,5 +136,9 @@ h1 {
   .quickView-container {
     width: 100%;
   }
+
+  .blocks-container {
+    flex-wrap: wrap;
+  }
 }
 </style>

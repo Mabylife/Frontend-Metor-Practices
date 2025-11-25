@@ -82,6 +82,7 @@ button.submit {
 @media (max-width: 1440px) {
   .searchBar-container {
     width: 100%;
+    flex-wrap: wrap;
   }
   .input-container {
     flex-grow: 1;
@@ -89,6 +90,12 @@ button.submit {
   }
 
   .input-container > input {
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  button.submit {
     width: 100%;
   }
 }

@@ -106,4 +106,9 @@ import HourlyForecast from './components/Hourly-forecast..vue'
     align-self: stretch;
   }
 }
+
+@media (max-width: 414px) {
+  .container {
+  }
+}
 </style>
