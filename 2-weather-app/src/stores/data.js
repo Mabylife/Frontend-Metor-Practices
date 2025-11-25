@@ -2,9 +2,9 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useWeatherStore = defineStore('weatherData', () => {
-  const searchingCity = ref('Taipei')
-  const country = ref('')
-  const city = ref('')
+  const searchingCity = ref('HongKong')
+  const country = ref('Taiwan')
+  const city = ref('Taichung')
   const latitude = ref(24.1469)
   const longitude = ref(120.6839)
 
@@ -32,7 +32,7 @@ export const useWeatherStore = defineStore('weatherData', () => {
         latitude.value = data.results[0].latitude
         longitude.value = data.results[0].longitude
         city.value = data.results[0].name
-        country.value = data.results[0].country
+        country.value = data.results[0].country || ''
       }
     } catch (error) {}
   }
@@ -51,8 +51,8 @@ export const useWeatherStore = defineStore('weatherData', () => {
         return response.json()
       })
       .then((data) => {
-        temperature.value = data.current.temperature_2m
-        apparent.value = data.current.apparent_temperature
+        temperature.value = Math.round(data.current.temperature_2m)
+        apparent.value = Math.round(data.current.apparent_temperature)
         humidity.value = data.current.relative_humidity_2m
         wind.value = data.current.wind_speed_10m
         precipitation.value = data.current.precipitation
