@@ -1,4 +1,17 @@
-<script setup></script>
+<script setup>
+// const props = defineProps({
+//   place: {
+//     type: Number,
+//     required: true,
+//   },
+//   isLoading: {
+//     type: Boolean,
+//     required: true,
+//   },
+// })
+
+const now = new Date()
+</script>
 
 <template>
   <div class="dailyForecastBlock-container">

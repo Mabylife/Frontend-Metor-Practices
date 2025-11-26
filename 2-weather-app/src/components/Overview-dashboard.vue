@@ -8,31 +8,6 @@ const store = useWeatherStore()
 onMounted(async () => {
   await store.getCurrentData()
 })
-
-const now = ref()
-now.value = new Date()
-const year = now.value.getFullYear()
-const month = now.value.getMonth() + 1 // Add 1 because getMonth() is 0-indexed
-const day = now.value.getDate()
-
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-const weekDay = days[now.value.getDay()]
-
-const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
-const monthName = months[now.value.getMonth()]
 </script>
 
 <template>
@@ -43,7 +18,10 @@ const monthName = months[now.value.getMonth()]
         <h4 v-if="!store.loading">
           {{ store.displayName }}
         </h4>
-        <h6>{{ weekDay }}, {{ monthName }} {{ day }}, {{ year }}</h6>
+        <h6 v-if="store.loading">-</h6>
+        <h6 v-if="!store.loading">
+          {{ store.weekDay }}, {{ store.monthName }} {{ store.day }}, {{ store.year }}
+        </h6>
       </div>
       <div class="right">
         <img

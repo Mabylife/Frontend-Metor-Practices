@@ -26,6 +26,7 @@ async function handleSelect(result) {
   store.latitude = result.latitude
   store.longitude = result.longitude
   store.displayName = parseName(result)
+  store.timezone = result.timezone
 
   // apply names to store.country and store.city
 

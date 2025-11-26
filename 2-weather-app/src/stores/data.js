@@ -5,6 +5,7 @@ export const useWeatherStore = defineStore('weatherData', () => {
   const displayName = ref('Taichung, Taiwan')
   const latitude = ref(24.1469)
   const longitude = ref(120.6839)
+  const timezone = ref('Asia/Taipei')
 
   const weatherCode = ref(0)
 
@@ -24,7 +25,7 @@ export const useWeatherStore = defineStore('weatherData', () => {
   async function getCurrentData() {
     loading.value = true
     await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&models=best_match&current=temperature_2m,relative_humidity_2m,wind_speed_10m,precipitation,weather_code,apparent_temperature`,
+      `https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,precipitation,weather_code,apparent_temperature&forecast_days=0`,
     )
       .then((response) => {
         // Check if the request was successful
@@ -97,7 +98,55 @@ export const useWeatherStore = defineStore('weatherData', () => {
     return `/assets/images/icon-${iconName[index]}.webp`
   }
 
+  const year = ref(0)
+  const month = ref(0)
+  const monthName = ref('')
+  const day = ref(0)
+  const weekDay = ref('')
+  const shortWeekDay = ref('')
+
+  setInterval(() => {
+    const now = ref(new Date())
+
+    year.value = now.value.toLocaleString('en-US', {
+      year: 'numeric',
+      timezone,
+    })
+
+    month.value = now.value.toLocaleString('en-US', {
+      month: '2-digit',
+      timezone,
+    })
+
+    monthName.value = now.value.toLocaleString('en-US', {
+      month: 'long',
+      timezone,
+    })
+
+    day.value = now.value.toLocaleString('en-US', {
+      day: '2-digit',
+      timezone,
+    })
+
+    weekDay.value = now.value.toLocaleString('en-US', {
+      weekday: 'long',
+      timezone,
+    })
+
+    shortWeekDay.value = now.value.toLocaleString('en-US', {
+      weekday: 'short',
+      timezone,
+    })
+  }, 1000)
+
   return {
+    year,
+    day,
+    monthName,
+    weekDay,
+    shortWeekDay,
+
+    timezone,
     weatherCode,
     code2icon,
     loading,
