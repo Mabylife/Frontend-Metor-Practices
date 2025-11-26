@@ -98,12 +98,15 @@ export const useWeatherStore = defineStore('weatherData', () => {
     return `/assets/images/icon-${iconName[index]}.webp`
   }
 
+  const StaticWeekDayOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
   const year = ref(0)
   const month = ref(0)
   const monthName = ref('')
   const day = ref(0)
   const weekDay = ref('')
   const shortWeekDay = ref('')
+
+  const weekDayOrder = ref([])
 
   setInterval(() => {
     const now = ref(new Date())
@@ -137,9 +140,13 @@ export const useWeatherStore = defineStore('weatherData', () => {
       weekday: 'short',
       timezone,
     })
+
+    let i = StaticWeekDayOrder.indexOf(shortWeekDay.value)
+    weekDayOrder.value = [...StaticWeekDayOrder.slice(i), ...StaticWeekDayOrder.slice(0, i)]
   }, 1000)
 
   return {
+    weekDayOrder,
     year,
     day,
     monthName,

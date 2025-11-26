@@ -1,25 +1,36 @@
 <script setup>
-// const props = defineProps({
-//   place: {
-//     type: Number,
-//     required: true,
-//   },
-//   isLoading: {
-//     type: Boolean,
-//     required: true,
-//   },
-// })
+import { useWeatherStore } from '@/stores/data'
+const store = useWeatherStore()
+
+const props = defineProps({
+  place: {
+    type: Number,
+    required: true,
+  },
+  isLoading: {
+    type: Boolean,
+    required: true,
+  },
+})
 
 const now = new Date()
 </script>
 
 <template>
-  <div class="dailyForecastBlock-container">
-    <h6>Day</h6>
+  <div v-if="!isLoading" class="dailyForecastBlock-container">
+    <h6>{{ store.weekDayOrder[place] }}</h6>
     <img src="/assets/images/icon-snow.webp" class="icon" alt="weather indicator" />
     <div class="stats">
       <p>20°</p>
       <p>15°</p>
+    </div>
+  </div>
+  <div v-if="isLoading" class="dailyForecastBlock-container">
+    <h6 class="loading">-</h6>
+    <div class="icon"></div>
+    <div class="stats">
+      <p class="loading">-</p>
+      <p class="loading">-</p>
     </div>
   </div>
 </template>
@@ -79,6 +90,10 @@ p {
   justify-content: space-between;
   align-items: center;
   align-self: stretch;
+}
+
+.loading {
+  color: transparent;
 }
 
 @media (max-width: 414px) {

@@ -23,7 +23,7 @@ const title = ref('')
 
 const value = computed(() => {
   if (props.isLoading) {
-    return `-`
+    return `–`
   }
 
   if (props.property === 'Feels Like') {

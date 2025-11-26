@@ -1,18 +1,21 @@
 <script setup>
 import DailyForecastBlock from './Daily-forecast-block.vue'
+import { useWeatherStore } from '@/stores/data'
+
+const store = useWeatherStore()
 </script>
 
 <template>
   <div class="dailyForecast-container">
     <h5>Daily forecast</h5>
     <div class="blocks-container">
-      <DailyForecastBlock />
-      <DailyForecastBlock />
-      <DailyForecastBlock />
-      <DailyForecastBlock />
-      <DailyForecastBlock />
-      <DailyForecastBlock />
-      <DailyForecastBlock />
+      <DailyForecastBlock :is-loading="store.loading" :place="0" />
+      <DailyForecastBlock :is-loading="store.loading" :place="1" />
+      <DailyForecastBlock :is-loading="store.loading" :place="2" />
+      <DailyForecastBlock :is-loading="store.loading" :place="3" />
+      <DailyForecastBlock :is-loading="store.loading" :place="4" />
+      <DailyForecastBlock :is-loading="store.loading" :place="5" />
+      <DailyForecastBlock :is-loading="store.loading" :place="6" />
     </div>
   </div>
 </template>
