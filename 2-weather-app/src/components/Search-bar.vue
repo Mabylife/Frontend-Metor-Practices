@@ -50,11 +50,22 @@ async function handleSelect(result) {
   store.loading = false
 }
 
+let abortController = null
+
 async function displaySearchResult() {
+  if (abortController) {
+    abortController.abort()
+  }
+
+  abortController = new AbortController()
+
   isSearching.value = true
+  comfrimedNoResult.value = false
+
   try {
     const response = await fetch(
       `https://geocoding-api.open-meteo.com/v1/search?name=${inputValue.value}&count=5&language=en&format=json`,
+      { signal: abortController.signal },
     )
     if (!response.ok) {
       throw new Error('geocoding api error')
@@ -68,10 +79,12 @@ async function displaySearchResult() {
       comfrimedNoResult.value = true
     }
   } catch (error) {
+    if (error.name === 'AbortError') {
+      return
+    }
     searchResults.value = []
     console.log(error)
   }
-  console.log('searchResults:', searchResults.value)
   isSearching.value = false
 }
 </script>
