@@ -154,7 +154,7 @@ export const useWeatherStore = defineStore('weatherData', () => {
       index = 7
     }
 
-    return `/assets/images/icon-${iconName[index]}.webp`
+    return `/2-weather-app/dist/assets/images/icon-${iconName[index]}.webp`
   }
 
   const StaticWeekDayOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
