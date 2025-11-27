@@ -96,6 +96,7 @@ async function displaySearchResult() {
       <div class="input-container">
         <img src="/assets/images/icon-search.svg" alt="search icon" />
         <input
+          @keyup.enter="checkInput()"
           @input="checkInput()"
           v-model="inputValue"
           type="text"
@@ -128,7 +129,7 @@ async function displaySearchResult() {
         </button>
       </div>
     </div>
-    <button class="submit" type="submit">Search</button>
+    <button class="submit" type="submit" @click="checkInput()">Search</button>
   </div>
 </template>
 
