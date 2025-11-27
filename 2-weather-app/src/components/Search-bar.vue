@@ -88,14 +88,18 @@ async function displaySearchResult() {
   }
   isSearching.value = false
 }
+
+const inputClass = ref('')
 </script>
 
 <template>
   <div class="searchBar-container">
     <div class="search-container">
-      <div class="input-container">
+      <div class="input-container" :class="inputClass">
         <img src="/assets/images/icon-search.svg" alt="search icon" />
         <input
+          @focus="inputClass = 'focus'"
+          @focusout="inputClass = ''"
           @keyup.enter="checkInput()"
           @input="checkInput()"
           v-model="inputValue"
@@ -150,7 +154,6 @@ async function displaySearchResult() {
 .search-container {
   display: flex;
   flex-direction: column;
-  gap: 0.62rem;
 }
 
 .searchDropdown-container {
@@ -224,6 +227,15 @@ async function displaySearchResult() {
   background: var(--colors-neutral-800, #262540);
 }
 
+/* It looks so bad, i'm sorry, designer */
+/* .input-container.focus {
+  border-radius: var(--corner-radius-12, 0.75rem);
+  background: var(--colors-neutral-800, #262540);
+  box-shadow:
+    0 0 0 3px var(--colors-neutral-900, #02012c),
+    0 0 0 5px var(--colors-neutral-0, #fff);
+} */
+
 img {
   height: 100%;
   width: auto;
@@ -232,6 +244,7 @@ img {
 input {
   color: var(--colors-neutral-200, #d4d3d9);
 
+  /* Im sorry desinger but this can't be pointer cursor for real */
   cursor: text;
 
   background: none;
@@ -270,6 +283,12 @@ button.submit {
   font-style: normal;
   font-weight: 500;
   line-height: 120%; /* 1.5rem */
+
+  cursor: pointer;
+}
+
+button.submit:hover {
+  background: var(--colors-blue-700, #2b1b9c);
 }
 
 @media (max-width: 1440px) {

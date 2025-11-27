@@ -44,6 +44,7 @@ function handleSelectDay(i) {
 }
 
 button {
+  cursor: pointer;
   display: flex;
   padding: 0.5rem 1rem;
   justify-content: center;

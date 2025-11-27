@@ -8,7 +8,7 @@ const store = useWeatherStore()
 
 <template>
   <div class="overviewDashboard-container">
-    <div class="quickView-container">
+    <div v-if="!store.loading" class="quickView-container">
       <div class="left">
         <h4 v-if="store.loading">Loading...</h4>
         <h4 v-if="!store.loading">
@@ -28,6 +28,16 @@ const store = useWeatherStore()
         />
         <h1 v-if="store.loading">- °</h1>
         <h1 v-if="!store.loading">{{ store.temperature }}°</h1>
+      </div>
+    </div>
+    <div v-if="store.loading" class="quickView-container whenLoading">
+      <div class="center">
+        <div class="dots">
+          <div class="dot"></div>
+          <div class="dot delay"></div>
+          <div class="dot"></div>
+        </div>
+        <h6>Loading...</h6>
       </div>
     </div>
     <div class="blocks-container">
@@ -117,6 +127,62 @@ h1 {
   padding: 1.5rem;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+.quickView-container.whenLoading {
+  background-image: url(/assets/images/bg-today-noise.svg);
+  justify-content: center;
+  align-items: center;
+}
+
+.center {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.center .dots {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 3.5rem;
+  height: max-content;
+}
+
+.dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 0.75rem;
+  opacity: 0.8;
+  background: var(--colors-neutral-0, #fff);
+
+  animation: moveUp 1s infinite linear;
+}
+
+.dot.delay {
+  animation-delay: 0.5s;
+}
+
+@keyframes moveUp {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(0.25rem);
+  }
+}
+
+.center h6 {
+  color: var(--colors-neutral-200, #d4d3d9);
+  text-align: center;
+
+  /* text-preset-6 */
+  font-family: 'DM Sans';
+  font-size: 1.125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 1.35rem */
 }
 
 .quickView-container > .left {

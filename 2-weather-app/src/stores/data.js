@@ -2,6 +2,8 @@ import { ref, computed, Static } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useWeatherStore = defineStore('weatherData', () => {
+  const error = ref(false)
+
   const displayName = ref('Taichung, Taiwan')
   const latitude = ref(24.1469)
   const longitude = ref(120.6839)
@@ -47,6 +49,7 @@ export const useWeatherStore = defineStore('weatherData', () => {
   )
 
   async function getCurrentData() {
+    error.value = false
     try {
       const response = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,precipitation,weather_code,apparent_temperature&forecast_days=0${apiUnit.value}`,
@@ -66,12 +69,15 @@ export const useWeatherStore = defineStore('weatherData', () => {
       uDegree.value = data.current_units.temperature_2m
       uSpeed.value = data.current_units.wind_speed_10m
       uLength.value = data.current_units.precipitation
-    } catch (error) {
-      console.error('Error fetching data:', error)
+    } catch (errorLog) {
+      error.value = true
+      console.error('Error fetching current data:', errorLog)
     }
   }
 
   async function getDailyData() {
+    error.value = false
+
     try {
       const response = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=${encodeURIComponent(timezone.value)}${apiUnit.value}`,
@@ -81,14 +87,17 @@ export const useWeatherStore = defineStore('weatherData', () => {
       }
       const data = await response.json()
       dailyData.value = data
-    } catch (error) {
-      console.log(error)
+    } catch (errorLog) {
+      error.value = true
+      console.error('Error fetching daily data', errorLog)
     }
   }
 
   const hourlyData = ref([])
 
   async function getHourlyData() {
+    error.value = false
+
     selectedWeekdayNum.value = weekdayNum.value
 
     try {
@@ -100,8 +109,9 @@ export const useWeatherStore = defineStore('weatherData', () => {
       }
       const data = await response.json()
       hourlyData.value = data
-    } catch (error) {
-      console.log(error)
+    } catch (errorLog) {
+      error.value = true
+      console.error('Error fetching daily data', errorLog)
     }
   }
 
@@ -217,6 +227,7 @@ export const useWeatherStore = defineStore('weatherData', () => {
   const selectedWeekdayNum = ref(0)
 
   return {
+    error,
     metricCount,
     //unit
     selectedUDegree,

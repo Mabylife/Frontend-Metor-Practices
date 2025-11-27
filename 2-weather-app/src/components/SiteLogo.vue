@@ -1,7 +1,11 @@
-<script setup></script>
+<script setup>
+function refreshPage() {
+  location.reload()
+}
+</script>
 
 <template>
-  <div class="SiteLogo-container">
+  <div class="SiteLogo-container" @click="refreshPage()">
     <img src="/assets/images/logo.svg" alt="site logo" />
   </div>
 </template>

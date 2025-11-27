@@ -59,7 +59,7 @@ async function changeToImperial() {
 
 <template>
   <div class="units-dropdown-container">
-    <button @click="toggleIsOpen()">
+    <button class="toggleBtn" @click="toggleIsOpen()">
       <img src="/assets/images/icon-units.svg" alt="setting icon" />
       <span>Units</span>
     </button>
@@ -134,8 +134,11 @@ async function changeToImperial() {
 </template>
 
 <style scoped>
+.toggleBtn {
+  cursor: pointer;
+}
 .dropdownList {
-  z-index: 10;
+  z-index: 100;
 
   display: flex;
   width: 13.375rem;
@@ -159,6 +162,7 @@ async function changeToImperial() {
 }
 
 .option {
+  cursor: pointer;
   display: flex;
   width: 12.375rem;
   padding: var(--spacing-125, 0.625rem) var(--spacing-100, 0.5rem);
