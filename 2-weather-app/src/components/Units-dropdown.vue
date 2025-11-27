@@ -8,6 +8,53 @@ const isOpen = ref(false)
 function toggleIsOpen() {
   isOpen.value = !isOpen.value
 }
+
+async function handleChangeUnit(type) {
+  let isReload = true
+  if (type === 'c' && store.selectedUDegree !== 'celsius') {
+    store.selectedUDegree = 'celsius'
+  } else if (type === 'f' && store.selectedUDegree !== 'fahrenheit') {
+    store.selectedUDegree = 'fahrenheit'
+  } else if (type === 'kmh' && store.selectedUDegree !== 'kmh') {
+    store.selectedUSpeed = 'kmh'
+  } else if (type === 'mph' && store.selectedUDegree !== 'mph') {
+    store.selectedUSpeed = 'mph'
+  } else if (type === 'mm' && store.selectedUDegree !== 'mm') {
+    store.selectedULength = 'mm'
+  } else if (type === 'inch' && store.selectedUDegree !== 'inch') {
+    store.selectedULength = 'inch'
+  } else {
+    isReload = false
+  }
+  if (isReload) {
+    store.loading = true
+    await store.getCurrentData()
+    await store.getDailyData()
+    await store.getHourlyData()
+    store.loading = false
+  }
+}
+
+async function changeToMetric() {
+  store.selectedUDegree = 'celsius'
+  store.selectedULength = 'mm'
+  store.selectedUSpeed = 'kmh'
+  store.loading = true
+  await store.getCurrentData()
+  await store.getDailyData()
+  await store.getHourlyData()
+  store.loading = false
+}
+async function changeToImperial() {
+  store.selectedUDegree = 'fahrenheit'
+  store.selectedULength = 'inch'
+  store.selectedUSpeed = 'mph'
+  store.loading = true
+  await store.getCurrentData()
+  await store.getDailyData()
+  await store.getHourlyData()
+  store.loading = false
+}
 </script>
 
 <template>
@@ -17,10 +64,15 @@ function toggleIsOpen() {
       <span>Units</span>
     </button>
     <div class="dropdownList" v-if="isOpen">
-      <button class="option"><span>Switch to Imperial</span></button>
+      <button v-if="store.metricCount >= 2" class="option" @click="changeToImperial()">
+        <span>Switch to Imperial</span>
+      </button>
+      <button v-if="store.metricCount < 2" class="option" @click="changeToMetric()">
+        <span>Switch to Metric</span>
+      </button>
       <div class="optionsGroup">
         <span class="label">Temperature</span>
-        <button class="option">
+        <button class="option" @click="handleChangeUnit('c')">
           <span>Celsius (°C)</span>
           <img
             v-if="store.selectedUDegree === 'celsius'"
@@ -28,7 +80,7 @@ function toggleIsOpen() {
             alt=""
           />
         </button>
-        <button class="option">
+        <button class="option" @click="handleChangeUnit('f')">
           <span>Fahrenheit (°F)</span>
           <img
             v-if="store.selectedUDegree === 'fahrenheit'"
@@ -40,7 +92,7 @@ function toggleIsOpen() {
       <div class="separator"></div>
       <div class="optionsGroup">
         <span class="label">Wind Speed</span>
-        <button class="option">
+        <button class="option" @click="handleChangeUnit('kmh')">
           <span>km/h</span>
           <img
             v-if="store.selectedUSpeed === 'kmh'"
@@ -48,7 +100,7 @@ function toggleIsOpen() {
             alt=""
           />
         </button>
-        <button class="option">
+        <button class="option" @click="handleChangeUnit('mph')">
           <span>mph</span>
           <img
             v-if="store.selectedUSpeed === 'mph'"
@@ -60,7 +112,7 @@ function toggleIsOpen() {
       <div class="separator"></div>
       <div class="optionsGroup">
         <span class="label">Precipitation</span>
-        <button class="option">
+        <button class="option" @click="handleChangeUnit('mm')">
           <span>Millimeters (mm)</span>
           <img
             v-if="store.selectedULength === 'mm'"
@@ -68,10 +120,10 @@ function toggleIsOpen() {
             alt=""
           />
         </button>
-        <button class="option">
+        <button class="option" @click="handleChangeUnit('inch')">
           <span>Inches (in)</span>
           <img
-            v-if="store.selectedUSpeed === 'inch'"
+            v-if="store.selectedULength === 'inch'"
             src="/assets/images/icon-checkmark.svg"
             alt=""
           />

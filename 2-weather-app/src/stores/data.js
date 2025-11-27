@@ -27,6 +27,20 @@ export const useWeatherStore = defineStore('weatherData', () => {
   const selectedUSpeed = ref('kmh')
   const selectedUDegree = ref('celsius')
 
+  const metricCount = computed(() => {
+    let count = 0
+    if (selectedUDegree.value === 'celsius') {
+      count++
+    }
+    if (selectedULength.value === 'mm') {
+      count++
+    }
+    if (selectedUSpeed.value === 'kmh') {
+      count++
+    }
+    return count
+  })
+
   const apiUnit = computed(
     () =>
       `&wind_speed_unit=${selectedUSpeed.value}&temperature_unit=${selectedUDegree.value}&precipitation_unit=${selectedULength.value}`,
@@ -203,6 +217,7 @@ export const useWeatherStore = defineStore('weatherData', () => {
   const selectedWeekdayNum = ref(0)
 
   return {
+    metricCount,
     //unit
     selectedUDegree,
     selectedULength,
