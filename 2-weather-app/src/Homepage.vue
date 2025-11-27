@@ -8,10 +8,16 @@ import DailyForecast from './components/Daily-forecast.vue'
 import HourlyForecast from './components/Hourly-forecast..vue'
 
 import { useWeatherStore } from './stores/data'
+import { onMounted } from 'vue'
 
 const store = useWeatherStore()
 
-store.getCurrentData()
+onMounted(async () => {
+  store.loading = true
+  await store.getCurrentData()
+  await store.getDailyData()
+  store.loading = false
+})
 </script>
 
 <template>

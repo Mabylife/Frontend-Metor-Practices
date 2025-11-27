@@ -12,25 +12,27 @@ const props = defineProps({
     required: true,
   },
 })
-
-const now = new Date()
 </script>
 
 <template>
-  <div v-if="!isLoading" class="dailyForecastBlock-container">
-    <h6>{{ store.weekDayOrder[place] }}</h6>
-    <img src="/assets/images/icon-snow.webp" class="icon" alt="weather indicator" />
-    <div class="stats">
-      <p>20°</p>
-      <p>15°</p>
-    </div>
-  </div>
   <div v-if="isLoading" class="dailyForecastBlock-container">
     <h6 class="loading">-</h6>
     <div class="icon"></div>
     <div class="stats">
       <p class="loading">-</p>
       <p class="loading">-</p>
+    </div>
+  </div>
+  <div v-if="!isLoading && store.dailyData.daily" class="dailyForecastBlock-container">
+    <h6>{{ store.weekDayOrder[place] }}</h6>
+    <img
+      :src="store.code2icon(store.dailyData.daily.weather_code[place])"
+      class="icon"
+      alt="weather indicator"
+    />
+    <div class="stats">
+      <p>{{ Math.round(store.dailyData.daily.temperature_2m_min[place]) }}</p>
+      <p>{{ Math.round(store.dailyData.daily.temperature_2m_max[place]) }}</p>
     </div>
   </div>
 </template>

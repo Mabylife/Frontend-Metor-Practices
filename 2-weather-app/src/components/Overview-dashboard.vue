@@ -4,10 +4,6 @@ import DashboardBlock from './Dashboard-block.vue'
 import { useWeatherStore } from '@/stores/data'
 
 const store = useWeatherStore()
-
-onMounted(async () => {
-  await store.getCurrentData()
-})
 </script>
 
 <template>

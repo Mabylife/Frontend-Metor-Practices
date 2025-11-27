@@ -7,6 +7,8 @@ export const useWeatherStore = defineStore('weatherData', () => {
   const longitude = ref(120.6839)
   const timezone = ref('Asia/Taipei')
 
+  const dailyData = ref([])
+
   const weatherCode = ref(0)
 
   // 'u' stands for degree
@@ -23,37 +25,43 @@ export const useWeatherStore = defineStore('weatherData', () => {
   const loading = ref(false)
 
   async function getCurrentData() {
-    loading.value = true
-    await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,precipitation,weather_code,apparent_temperature&forecast_days=0`,
-    )
-      .then((response) => {
-        // Check if the request was successful
-        if (!response.ok) {
-          throw new Error(`API error`)
-        }
-        // Parse the response body as JSON
-        return response.json()
-      })
-      .then((data) => {
-        temperature.value = Math.round(data.current.temperature_2m)
-        apparent.value = Math.round(data.current.apparent_temperature)
-        humidity.value = data.current.relative_humidity_2m
-        wind.value = data.current.wind_speed_10m
-        precipitation.value = data.current.precipitation
+    try {
+      const response = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,precipitation,weather_code,apparent_temperature&forecast_days=0`,
+      )
+      if (!response.ok) {
+        throw new Error('current fetch api error')
+      }
+      const data = await response.json()
+      temperature.value = Math.round(data.current.temperature_2m)
+      apparent.value = Math.round(data.current.apparent_temperature)
+      humidity.value = data.current.relative_humidity_2m
+      wind.value = data.current.wind_speed_10m
+      precipitation.value = data.current.precipitation
 
-        weatherCode.value = data.current.weather_code
+      weatherCode.value = data.current.weather_code
 
-        uDegree.value = data.current_units.temperature_2m
-        uSpeed.value = data.current_units.wind_speed_10m
-        uLength.value = data.current_units.precipitation
-      })
-      .catch((error) => {
-        // Handle any errors during the fetch operation
-        console.error('Error fetching data:', error)
-      })
+      uDegree.value = data.current_units.temperature_2m
+      uSpeed.value = data.current_units.wind_speed_10m
+      uLength.value = data.current_units.precipitation
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
+  }
 
-    loading.value = false
+  async function getDailyData() {
+    try {
+      const response = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${latitude.value}&longitude=${longitude.value}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=${encodeURIComponent(timezone.value)}`,
+      )
+      if (!response.ok) {
+        throw new Error('daily fetch api error')
+      }
+      const data = await response.json()
+      dailyData.value = data
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   function code2icon(code) {
@@ -108,8 +116,9 @@ export const useWeatherStore = defineStore('weatherData', () => {
 
   const weekDayOrder = ref([])
 
+  const now = ref(new Date())
   setInterval(() => {
-    const now = ref(new Date())
+    now.value = new Date()
 
     year.value = now.value.toLocaleString('en-US', {
       year: 'numeric',
@@ -152,6 +161,9 @@ export const useWeatherStore = defineStore('weatherData', () => {
     monthName,
     weekDay,
     shortWeekDay,
+
+    getDailyData,
+    dailyData,
 
     timezone,
     weatherCode,

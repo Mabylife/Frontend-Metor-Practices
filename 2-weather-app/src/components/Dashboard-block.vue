@@ -15,10 +15,6 @@ const props = defineProps({
   },
 })
 
-onMounted(() => {
-  store.getCurrentData()
-})
-
 const title = ref('')
 
 const value = computed(() => {

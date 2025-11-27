@@ -22,6 +22,16 @@ function checkInput() {
   }
 }
 
+function parseName(result) {
+  if (!result.country) {
+    return result.name
+  } else if (result.name === result.country) {
+    return result.country
+  } else {
+    return result.name + ', ' + result.country
+  }
+}
+
 async function handleSelect(result) {
   store.latitude = result.latitude
   store.longitude = result.longitude
@@ -34,15 +44,10 @@ async function handleSelect(result) {
   inputValue.value = ''
   checkInput()
 
+  store.loading = true
   await store.getCurrentData()
-}
-
-function parseName(result) {
-  if (result.name === result.country) {
-    return result.country
-  } else {
-    return result.name + ', ' + result.country
-  }
+  await store.getDailyData()
+  store.loading = false
 }
 
 async function displaySearchResult() {
