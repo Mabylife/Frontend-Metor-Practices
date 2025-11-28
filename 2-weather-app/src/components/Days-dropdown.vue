@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useWeatherStore } from '@/stores/data'
 const store = useWeatherStore()
 
@@ -13,17 +13,25 @@ function handleSelectDay(i) {
   store.selectedWeekdayNum = i
   isOpen.value = false
 }
+
+const chivronClass = computed(() => {
+  if (isOpen.value) {
+    return 'upsideDown'
+  } else {
+    return ''
+  }
+})
 </script>
 
 <template>
   <div class="daysDropdown-container">
     <button v-if="!store.loading" @click="toggleIsOpen">
       <span>{{ store.StaticWeekDayOrderLong[store.selectedWeekdayNum] }}</span>
-      <img src="/assets/images/icon-dropdown.svg" alt="" />
+      <img class="chivron" :class="chivronClass" src="/assets/images/icon-dropdown.svg" alt="" />
     </button>
     <button v-if="store.loading">
       <span>–</span>
-      <img src="/assets/images/icon-dropdown.svg" alt="" />
+      <img :class="chivronClass" src="/assets/images/icon-dropdown.svg" alt="" />
     </button>
     <div class="dropdown-container" v-if="isOpen">
       <button @click="handleSelectDay(i - 1)" class="option" v-for="i in 7">
@@ -34,6 +42,14 @@ function handleSelectDay(i) {
 </template>
 
 <style scoped>
+.chivron {
+  transition: 0.2s ease-in;
+}
+
+.upsideDown {
+  transform: rotate(180deg);
+}
+
 .daysDropdown-container {
   display: flex;
   flex-direction: column;

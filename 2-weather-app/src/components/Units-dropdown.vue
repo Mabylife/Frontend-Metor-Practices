@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useWeatherStore } from '@/stores/data'
 
 const store = useWeatherStore()
@@ -8,6 +8,14 @@ const isOpen = ref(false)
 function toggleIsOpen() {
   isOpen.value = !isOpen.value
 }
+
+const chivronClass = computed(() => {
+  if (isOpen.value) {
+    return 'upsideDown'
+  } else {
+    return ''
+  }
+})
 
 async function handleChangeUnit(type) {
   let isReload = true
@@ -62,6 +70,7 @@ async function changeToImperial() {
     <button class="toggleBtn" @click="toggleIsOpen()">
       <img src="/assets/images/icon-units.svg" alt="setting icon" />
       <span>Units</span>
+      <img class="chivron" :class="chivronClass" src="/assets/images/icon-dropdown.svg" alt="" />
     </button>
     <div class="dropdownList" v-if="isOpen">
       <button v-if="store.metricCount >= 2" class="option" @click="changeToImperial()">
@@ -134,6 +143,14 @@ async function changeToImperial() {
 </template>
 
 <style scoped>
+.chivron {
+  transition: 0.2s ease-in;
+}
+
+.upsideDown {
+  transform: rotate(180deg);
+}
+
 .toggleBtn {
   cursor: pointer;
 }
