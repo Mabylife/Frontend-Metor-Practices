@@ -267,7 +267,17 @@ button > span {
   line-height: 120%; /* 1.2rem */
 }
 
+@media (max-width: 1440px) {
+  .toggleBtn {
+    height: 2.6875rem;
+  }
+}
+
 @media (max-width: 414px) {
+  .toggleBtn {
+    max-height: 2.0625rem;
+  }
+
   button {
     display: flex;
     padding: var(--spacing-100, 0.5rem) var(--spacing-125, 0.625rem);

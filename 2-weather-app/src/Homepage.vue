@@ -212,6 +212,9 @@ function refreshPage() {
     gap: var(--spacing-400, 2rem);
     align-self: stretch;
   }
+  .top-container {
+    height: 2.6875rem;
+  }
 }
 
 @media (max-width: 414px) {
@@ -226,6 +229,7 @@ function refreshPage() {
   }
 
   .top-container {
+    height: 2.0625rem;
     max-height: 2.0625rem;
   }
 }
