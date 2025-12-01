@@ -1,12 +1,16 @@
 <script setup>
 import { useWeatherStore } from './stores/data'
 import { onMounted } from 'vue'
+import Toasts from './components/Toasts.vue'
 
 onMounted(async () => {
   store.loading = true
+  store.addToast('info', 'Loading weather data', 'loading')
   await store.getCurrentData()
   await store.getDailyData()
   await store.getHourlyData()
+  store.removeSpecialToast('loading')
+  store.addToast('success', 'Data done loading')
   store.loading = false
 })
 
@@ -27,6 +31,7 @@ function refreshPage() {
 
 <template>
   <div v-if="!store.error" class="container">
+    <Toasts />
     <div class="top-container">
       <div style="cursor: pointer">
         <SiteLogo />
@@ -135,6 +140,8 @@ function refreshPage() {
 }
 
 .container {
+  position: relative;
+
   display: flex;
   width: 100%;
   padding: var(--spacing-600, 3rem) var(--spacing-1400, 7rem) var(--spacing-1000, 5rem)

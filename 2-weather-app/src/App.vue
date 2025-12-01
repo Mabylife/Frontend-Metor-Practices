@@ -21,6 +21,13 @@ import Homepage from './Homepage.vue'
   font-family: 'DM Sans';
   src: url('/assets/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf');
 }
+
+:root {
+  --danger: #bb928b;
+  --warning: #a6a17d;
+  --success: #85a894;
+  --info: #8da0bf;
+}
 </style>
 
 <style scoped>

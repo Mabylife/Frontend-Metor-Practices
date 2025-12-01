@@ -226,7 +226,49 @@ export const useWeatherStore = defineStore('weatherData', () => {
 
   const selectedWeekdayNum = ref(0)
 
+  const toasts = ref([])
+  const toastID = ref(0)
+
+  function autoRemoveToast(id) {
+    setTimeout(() => {
+      let index = toasts.value.findIndex((t) => t.id === id)
+      toasts.value[index].animating = true
+
+      setTimeout(() => {
+        toasts.value.splice(index, 1)
+      }, 500)
+    }, 3000)
+  }
+
+  function removeSpecialToast(sid) {
+    let index = toasts.value.findIndex((t) => t.sid === sid)
+    toasts.value[index].animating = true
+
+    setTimeout(() => {
+      toasts.value.splice(index, 1)
+    }, 250)
+  }
+
+  function addToast(type, m, sid) {
+    let shouldRemove
+    if (!sid) {
+      shouldRemove = true
+    } else if (sid) {
+      shouldRemove = false
+    }
+    let newToast = { id: toastID.value, type: type, content: m, sid: sid, animating: false }
+    toastID.value++
+    toasts.value.push(newToast)
+    if (shouldRemove) {
+      autoRemoveToast(newToast.id)
+    }
+  }
+
   return {
+    autoRemoveToast,
+    removeSpecialToast,
+    toasts,
+    addToast,
     error,
     metricCount,
     //unit
