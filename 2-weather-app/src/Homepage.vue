@@ -10,7 +10,9 @@ onMounted(async () => {
   await store.getDailyData()
   await store.getHourlyData()
   store.removeSpecialToast('loading')
-  store.addToast('success', 'Data done loading')
+  if (!store.error) {
+    store.addToast('success', 'Data done loading')
+  }
   store.loading = false
 })
 
@@ -52,6 +54,7 @@ function refreshPage() {
     </div>
   </div>
   <div v-if="store.error" class="container">
+    <Toasts />
     <div class="top-container">
       <SiteLogo />
       <UnitsDropdown />

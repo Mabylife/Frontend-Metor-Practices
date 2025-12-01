@@ -45,9 +45,14 @@ async function handleSelect(result) {
   checkInput()
 
   store.loading = true
+  store.addToast('info', 'Loading weather data', 'loading')
   await store.getCurrentData()
   await store.getDailyData()
   await store.getHourlyData()
+  store.removeSpecialToast('loading')
+  if (!store.error) {
+    store.addToast('success', 'Data done loading')
+  }
   store.loading = false
 }
 
@@ -84,7 +89,8 @@ async function displaySearchResult() {
       return
     }
     searchResults.value = []
-    console.log(error)
+    console.error(error)
+    store.addToast('error', 'AbortError')
   }
   isSearching.value = false
 }

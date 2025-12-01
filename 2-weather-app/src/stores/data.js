@@ -72,6 +72,7 @@ export const useWeatherStore = defineStore('weatherData', () => {
     } catch (errorLog) {
       error.value = true
       console.error('Error fetching current data:', errorLog)
+      addToast('error', 'Error fetching data')
     }
   }
 
@@ -90,6 +91,7 @@ export const useWeatherStore = defineStore('weatherData', () => {
     } catch (errorLog) {
       error.value = true
       console.error('Error fetching daily data', errorLog)
+      addToast('error', 'Error fetching data')
     }
   }
 
@@ -112,6 +114,7 @@ export const useWeatherStore = defineStore('weatherData', () => {
     } catch (errorLog) {
       error.value = true
       console.error('Error fetching daily data', errorLog)
+      addToast('error', 'Error fetching data')
     }
   }
 
@@ -237,7 +240,7 @@ export const useWeatherStore = defineStore('weatherData', () => {
       setTimeout(() => {
         toasts.value.splice(index, 1)
       }, 500)
-    }, 3000)
+    }, 5000)
   }
 
   function removeSpecialToast(sid) {
